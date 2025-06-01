@@ -11,14 +11,23 @@ jobs:
     if: github.event.pull_request.base.ref == 'main'
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          node-version: '20'
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
           registry-url: 'https://registry.npmjs.org'
 
-      - run: pnpm install
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        id: pnpm-install
+        with:
+          version: 10.8.0
+          run_install: true
 
       - name: Build
         run: pnpm build
