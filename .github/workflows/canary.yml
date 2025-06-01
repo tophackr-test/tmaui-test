@@ -41,7 +41,7 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Publish to npm
-        run: npm publish --tag canary --access public
+      - name: Run release script
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: node scripts/release.js
