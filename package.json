@@ -39,12 +39,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tophackr/tmaui.git"
+    "url": "git+ssh://git@github.com/tophackr-test/tmaui-test.git"
   },
   "author": "Alexandr Musikhin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tophackr/tmaui/issues"
+    "url": "https://github.com/tophackr-test/tmaui-test/issues"
   },
   "homepage": "https://tophackr.com/tmaui/",
   "peerDependencies": {
