@@ -3,9 +3,13 @@ name: Write Beta Release comment
 
 on:
   workflow_run:
-    workflows: ['Release - Beta']
+    workflows: [Release - Beta]
     types:
       - completed
+
+permissions:
+  pull-requests: write
+  issues: write
 
 jobs:
   comment:
@@ -23,19 +27,19 @@ jobs:
             const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              run_id: context.payload.workflow_run.id,
+              run_id: context.runId,
             });
 
             for (const artifact of allArtifacts.data.artifacts) {
               // Extract the PR number and package version from the artifact name
-              const match = /^npm-package-tophackr@(.*?)-pr-(\d+)/.exec(artifact.name);
+              const match = /^npm-package-tmaui-test@(.*?)-pr-(\d+)/.exec(artifact.name);
 
               if (match) {
                 require("fs").appendFileSync(
                   process.env.GITHUB_ENV,
                   `\nBETA_PACKAGE_VERSION=${match[1]}` +
                   `\nWORKFLOW_RUN_PR=${match[2]}` +
-                  `\nWORKFLOW_RUN_ID=${context.payload.workflow_run.id}`
+                  `\nWORKFLOW_RUN_ID=${context.runId}`
                 );
                 break;
               }
@@ -49,7 +53,7 @@ jobs:
             A new prerelease is available for testing:
 
             ```sh
-            pnpm dlx tmaui-test@${{ env.BETA_PACKAGE_VERSION }}
+            pnpm add tmaui-test@${{ env.BETA_PACKAGE_VERSION }}
             ```
 
       - name: 'Remove the autorelease label once published'
@@ -61,5 +65,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: '${{ env.WORKFLOW_RUN_PR }}',
-              name: '🚀 autorelease',
+              name: 'autorelease',
             });

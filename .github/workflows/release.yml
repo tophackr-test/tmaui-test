@@ -13,32 +13,38 @@ permissions:
 
 jobs:
   release:
-    if: ${{ github.repository_owner == 'tophackr-test' }}
+    if: ${{ github.repository_owner == 'tophackr' }}
     name: Create a PR for release workflow
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Use PNPM
-        uses: pnpm/action-setup@v4
+      - name: Cache turbo
+        uses: actions/cache@v4
         with:
-          version: 10.8.0
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
 
-      - name: Use Node.js 18
+      - name: Setup node
         uses: actions/setup-node@v3
         with:
-          version: 10.8.0
           node-version: 18
-          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Install NPM Dependencies
-        run: pnpm install
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        id: pnpm-install
+        with:
+          version: 10.8.0
+          run_install: true
 
-      # - name: Check for errors
-      #   run: pnpm check
+      - name: Check Code
+        run: pnpm run check
 
       - name: Build the package
         run: pnpm build

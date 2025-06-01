@@ -7,11 +7,12 @@ on:
     types: [labeled]
     branches:
       - main
+
 jobs:
   prerelease:
     if: |
       github.repository_owner == 'tophackr-test' &&
-      contains(github.event.pull_request.labels.*.name, '🚀 autorelease')
+      contains(github.event.pull_request.labels.*.name, 'autorelease')
     name: Build & Publish a beta release to NPM
     runs-on: ubuntu-latest
     environment: Preview
@@ -40,9 +41,9 @@ jobs:
         run: node .github/version-script-beta.mjs
 
       - name: Authenticate to NPM
-        run: echo "//registry.npmjs.org/:_authToken=$NPM_ACCESS_TOKEN" >> .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
         env:
-          NPM_ACCESS_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Beta to NPM
         run: pnpm pub:beta
@@ -54,5 +55,5 @@ jobs:
       - name: Upload packaged artifact
         uses: actions/upload-artifact@v4
         with:
-          name: npm-package-tophackr@${{ steps.package-version.outputs.current-version }}-pr-${{ github.event.number }} # encode the PR number into the artifact name
+          name: npm-package-tmaui-test@${{ steps.package-version.outputs.current-version }}-pr-${{ github.event.number }} # encode the PR number into the artifact name
           path: dist/index.js
