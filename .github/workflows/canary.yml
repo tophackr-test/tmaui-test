@@ -29,16 +29,15 @@ jobs:
           version: 10.8.0
           run_install: true
 
-      - name: Print NPM_TOKEN length
-        id: token-length
-        run: |
-          echo "TOKEN LENGTH: ${#NPM_TOKEN}"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Build
         run: pnpm build
 
-      - run: npm publish --tag canary --loglevel verbose
+      - name: Publish Canary
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+          pnpm changeset version --snapshot canary-${{ github.run_number }}
+          pnpm install
+          pnpm run build
+          pnpm changeset publish --tag canary
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
