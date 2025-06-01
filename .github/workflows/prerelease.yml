@@ -10,7 +10,7 @@ on:
 jobs:
   prerelease:
     if: |
-      github.repository_owner == 'shadcn-ui' &&
+      github.repository_owner == 'tophackr-test' &&
       contains(github.event.pull_request.labels.*.name, '🚀 autorelease')
     name: Build & Publish a beta release to NPM
     runs-on: ubuntu-latest
@@ -25,13 +25,13 @@ jobs:
       - name: Use PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: 9.0.6
+          version: 10.8.0
 
       - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: Install NPM Dependencies
         run: pnpm install
@@ -40,9 +40,9 @@ jobs:
         run: node .github/version-script-beta.js
 
       - name: Authenticate to NPM
-        run: echo "//registry.npmjs.org/:_authToken=$NPM_ACCESS_TOKEN" >> packages/shadcn/.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
         env:
-          NPM_ACCESS_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+          NPM_ACCESS_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Beta to NPM
         run: pnpm pub:beta
@@ -50,11 +50,9 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
-        with:
-          path: packages/shadcn
 
       - name: Upload packaged artifact
         uses: actions/upload-artifact@v4
         with:
-          name: npm-package-shadcn@${{ steps.package-version.outputs.current-version }}-pr-${{ github.event.number }} # encode the PR number into the artifact name
-          path: packages/shadcn/dist/index.js
+          name: npm-package-tophackr@${{ steps.package-version.outputs.current-version }}-pr-${{ github.event.number }} # encode the PR number into the artifact name
+          path: dist/index.js
