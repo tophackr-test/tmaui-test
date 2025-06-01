@@ -34,8 +34,7 @@
     "storybook": "storybook dev -p 6006 --docs --no-open",
     "storybook:build": "storybook build --docs",
     "css:types": "tcm -p 'src/**/*.module.*css'",
-    "css:types:dev": "tcm -p 'src/**/*.module.*css' --watch",
-    "release": "changeset publish"
+    "css:types:dev": "tcm -p 'src/**/*.module.*css' --watch"
   },
   "repository": {
     "type": "git",
