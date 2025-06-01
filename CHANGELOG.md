@@ -1,5 +1,11 @@
 empty
 
+## 2.1.14
+
+### Patch Changes
+
+- [`8f8ecb9`](https://github.com/tophackr-test/tmaui-test/commit/8f8ecb9169cde0cce98ed8ef370932f7d36a918b) Thanks [@tophackr](https://github.com/tophackr)! - remove unused class in tablist
+
 ## 2.1.13
 
 ### Patch Changes
