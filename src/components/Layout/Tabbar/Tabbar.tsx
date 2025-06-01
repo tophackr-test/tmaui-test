@@ -30,6 +30,7 @@ export const Tabbar = ({ children, className, ...restProps }: TabbarProps) => {
       className={classNames(
         styles.wrapper,
         platform === 'ios' && styles['wrapper--ios'],
+        'h1',
         className
       )}
       {...restProps}
