@@ -35,9 +35,9 @@ jobs:
       - name: Publish Canary
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          changeset version --snapshot canary
+          pnpm changeset version --snapshot canary-${{ github.run_number }}
           pnpm install
           pnpm run build
-          changeset publish --tag canary
+          pnpm changeset publish --tag canary
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
