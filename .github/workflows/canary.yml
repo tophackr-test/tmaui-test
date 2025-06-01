@@ -29,6 +29,13 @@ jobs:
           version: 10.8.0
           run_install: true
 
+      - name: Print NPM_TOKEN length
+        id: token-length
+        run: |
+          echo "TOKEN LENGTH: ${#NPM_TOKEN}"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Build
         run: pnpm build
 
