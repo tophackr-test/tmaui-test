@@ -1,6 +1,6 @@
 {
   "name": "tmaui-test",
-  "version": "0.0.1",
+  "version": "2.1.12",
   "description": "World-class, ultimate UI developer toolkit.",
   "main": "./dist/cjs/index.js",
   "module": "./dist/index.js",
@@ -35,6 +35,7 @@
     "storybook:build": "storybook build --docs",
     "css:types": "tcm -p 'src/**/*.module.*css'",
     "css:types:dev": "tcm -p 'src/**/*.module.*css' --watch",
+    "release": "changeset version",
     "pub:beta": "pnpm build && pnpm publish --no-git-checks --access public --tag beta",
     "pub:next": "pnpm build && pnpm publish --no-git-checks --access public --tag next",
     "pub:release": "pnpm build && pnpm publish --access public"
