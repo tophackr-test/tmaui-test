@@ -1,8 +1,8 @@
-name: Release
+name: Canary
 
 on:
   push:
-    branches:
+    branches-ignore:
       - main
 
 permissions:
@@ -35,25 +35,16 @@ jobs:
           version: 10.8.0
           run_install: true
 
-      - name: Bump version
+      - name: Bump canary version
         run: node scripts/bump-version.js
 
-      - name: Generate changelog
-        run: npx conventional-changelog -p angular -i CHANGELOG.md -s
-
-      - name: Commit changelog and tag
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add CHANGELOG.md package.json
-          git commit -m "chore(release): publish"
-          git tag v$(node -p "require('./package.json').version")
-          git push --follow-tags
+      - name: Generate Changelog
+        run: node scripts/generate-changelog.js
 
       - name: Build
         run: pnpm build
 
       - name: Publish to npm
-        run: npm publish --access public
+        run: npm publish --tag canary --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
