@@ -2,13 +2,14 @@
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import packageJson from '../package.json';
 
 const changelogFile = path.resolve(process.cwd(), 'CHANGELOG.md');
 
 // Получаем последнюю версию из git tag
 const latestTag = execSync('git describe --tags --abbrev=0').toString().trim();
 
-const newTag = require('../package.json').version;
+const newTag = packageJson.version;
 
 // Формируем список коммитов с Conventional Commit
 const commits = execSync(`git log ${latestTag}..HEAD --pretty=format:"%s"`)
