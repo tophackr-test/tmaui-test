@@ -34,7 +34,10 @@
     "storybook": "storybook dev -p 6006 --docs --no-open",
     "storybook:build": "storybook build --docs",
     "css:types": "tcm -p 'src/**/*.module.*css'",
-    "css:types:dev": "tcm -p 'src/**/*.module.*css' --watch"
+    "css:types:dev": "tcm -p 'src/**/*.module.*css' --watch",
+    "pub:beta": "pnpm build && pnpm publish --no-git-checks --access public --tag beta",
+    "pub:next": "pnpm build && pnpm publish --no-git-checks --access public --tag next",
+    "pub:release": "pnpm build && pnpm publish --access public"
   },
   "repository": {
     "type": "git",
