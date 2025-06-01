@@ -38,9 +38,6 @@ jobs:
       - name: Bump canary version
         run: node scripts/bump-version.js
 
-      - name: Generate Changelog
-        run: node scripts/generate-changelog.js
-
       - name: Build
         run: pnpm build
 

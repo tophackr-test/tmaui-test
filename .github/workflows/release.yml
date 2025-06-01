@@ -38,6 +38,9 @@ jobs:
       - name: Bump version
         run: node scripts/bump-version.js
 
+      - name: Generate Changelog
+        run: node scripts/generate-changelog.js
+
       - name: Generate changelog
         run: npx conventional-changelog -p angular -i CHANGELOG.md -s
 
