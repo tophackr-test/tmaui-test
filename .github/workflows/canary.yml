@@ -32,20 +32,11 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Create Release
-        uses: StafflinePeoplePlus/changeset-github-release@v1.0.0
+      - name: Release Snapshot
+        uses: 'the-guild-org/changesets-snapshot-action@v0.0.1'
         with:
-          owner: tophackr
-          repo: tmaui-test
-          package-json: package.json
-          changelog: CHANGELOG.md
-
-      - name: Publish Canary
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          pnpm changeset version --snapshot canary-${{ github.run_number }}
-          pnpm install
-          pnpm run build
-          pnpm changeset publish --tag canary
+          tag: canary
+          prepareScript: 'pnpm build'
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # NPM Token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub Token
