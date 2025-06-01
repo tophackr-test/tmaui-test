@@ -36,9 +36,15 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Create .npmrc
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Build
         run: pnpm build
 
-      - run: npm publish --tag canary
+      - run: npm publish --tag canary --loglevel verbose
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
