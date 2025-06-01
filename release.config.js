@@ -1,6 +1,5 @@
 module.exports = {
   branches: [
-    'main',
     { name: 'main', channel: 'latest' },
     { name: '/^.*$/', prerelease: 'canary' },
   ],
